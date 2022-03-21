@@ -1,0 +1,79 @@
+
+	insert 10 document:-db.users.inserMany([{
+            "first_name": "Antonie",
+            "last_name": "Gammett",
+            "email": "agammett0@networkadvertising.org",
+            "gender": "Male",
+            "ip_address": "99.179.97.177"
+        },
+        {
+            "first_name": "Brody",
+            "last_name": "Hardiman",
+            "email": "bhardiman1@hibu.com",
+            "gender": "Female",
+            "ip_address": "64.240.3.229"
+        },
+        {
+            "first_name": "Kira",
+            "last_name": "Petegrew",
+            "email": "kpetegrew2@deviantart.com",
+            "gender": "Genderqueer",
+            "ip_address": "102.252.169.213"
+        },
+        {
+            "first_name": "Leola",
+            "last_name": "Fitchew",
+            "email": "lfitchew3@sfgate.com",
+            "gender": "Non-binary",
+            "ip_address": "147.156.164.62"
+        },
+        {
+            "first_name": "Waneta",
+            "last_name": "Castlake",
+            "email": "wcastlake4@ebay.com",
+            "gender": "Genderfluid",
+            "ip_address": "78.49.98.243"
+        },
+        {
+            "first_name": "Nate",
+            "last_name": "Fink",
+            "email": "nfink5@ocn.ne.jp",
+            "gender": "Male",
+            "ip_address": "152.250.23.69"
+        },
+        {
+            "first_name": "Sunny",
+            "last_name": "Dan",
+            "email": "sdan6@topsy.com",
+            "gender": "Polygender",
+            "ip_address": "187.56.65.108"
+        },
+        {
+            "first_name": "Sax",
+            "last_name": "Trowill",
+            "email": "strowill7@hexun.com",
+            "gender": "Female",
+            "ip_address": "16.62.154.33"
+        },
+        {
+            "first_name": "Finlay",
+            "last_name": "Giamelli",
+            "email": "fgiamelli8@over-blog.com",
+            "gender": "Male",
+            "ip_address": "186.92.108.30"
+        },
+        {
+            "first_name": "Clemmy",
+            "last_name": "Annon",
+            "email": "cannon9@hp.com",
+            "gender": "Male",
+            "ip_address": "152.2.203.168"
+        }])
+
+
+
+	update 3 using many:-db.users.updateMany({"first_name":"Clemmy"},{$set:{"fisrt_name":"Chemmy"}})
+
+
+    
+	delete :-db.users.remove({"first_name":"Chemmy"},1)
