@@ -1,5 +1,7 @@
 
-	insert 10 document:-db.users.inserMany([{
+insert 10 document
+	
+	:-db.users.inserMany([{
             "first_name": "Antonie",
             "last_name": "Gammett",
             "email": "agammett0@networkadvertising.org",
@@ -72,8 +74,10 @@
 
 
 
-	update 3 using many:-db.users.updateMany({"first_name":"Clemmy"},{$set:{"fisrt_name":"Chemmy"}})
+update 3 using many:-
+	db.users.updateMany({"first_name":"Clemmy"},{$set:{"fisrt_name":"Chemmy"}})
 
 
     
-	delete :-db.users.remove({"first_name":"Chemmy"},1)
+delete :-
+	db.users.remove({"first_name":"Chemmy"},1)
