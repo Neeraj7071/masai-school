@@ -7,7 +7,7 @@ const comment=require("./controller/comment.controller")
 const app=express();
 app.use(express.json());
 app.use("/user",user);
-app.use("/books",books)
-app.use("/comment",comment)
+//app.use("/books",books)
+//app.use("/comment",comment)
 
 module.exports=app
