@@ -1,4 +1,5 @@
 const express = require("express");
+const req = require("express/lib/request");
 const mongoose = require("mongoose");
 
 const app = express();
@@ -9,6 +10,7 @@ app.use(express.json());
 const connect = ()=>{
     return mongoose.connect("mongodb+srv://neeraj:khajuriya1234@cluster0.vo7j0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 }
+
 
 
 // Step-1 - Create schema for section
@@ -32,6 +34,7 @@ const Section = mongoose.model("section", sectionSchema);
 const bookSchema = new mongoose.Schema({
     name:{type:String, required:true},
     body:{type:String, required:true},
+    count:{type:String,required:true},
     section_name:{type : mongoose.Schema.Types.ObjectId, ref : "section", required : true}
 })
 
@@ -58,8 +61,6 @@ const bookAuthorSchema = new mongoose.Schema({
     book_id:{type : mongoose.Schema.Types.ObjectId, ref:"book", required:true},
     author_id:[{type : mongoose.Schema.Types.ObjectId, ref:"author", required:true}]
 })
-
-// Step-8 - Connect the Schema to bookAuthors collection
 
 const BookAuthor = mongoose.model("bookAuthor", bookAuthorSchema)
 
@@ -138,7 +139,60 @@ app.get("/booksbyauthor/:id", async(req, res)=>{
 })
 
 
+// find all book by section
 
+app.get("/booksbysection/:id", async(req, res)=>{
+    const match = await Book.find({section_name:req.params.id}).lean().populate("section_name").exec();
+    res.send(match)
+})
+
+//not checkout books in section;
+
+app.get("/booksnotissuedinsection/:id", async(req, res)=>{
+    const match = await Book.find({section_name:req.params.id,count:1}).lean().populate("section_name").exec();
+    res.send(match)
+})
+
+//all checkout books in section;
+
+app.get("/booksissuedinsection/:id", async(req, res)=>{
+    const match = await Book.find({section_name:req.params.id,count:0}).lean().populate("section_name").exec();
+    res.send(match)
+})
+
+//checkout
+
+app.get("/checkout/:id",async(req,res)=>{
+    const count=await Book.find({_id:req.params.id},{count:1,_id:0}).lean().exec();
+    // count=count[0];
+    // count=count[count]
+    if(count[0].count==1){
+        let b={count:0}
+            const user = await Book.findByIdAndUpdate(req.params.id, b, {
+            })
+        res.send("book issused")
+    }
+    else{
+        res.send("book already issused")
+    }
+})
+
+//checkin 
+app.get("/checkin/:id",async(req,res)=>{
+    const count=await Book.find({_id:req.params.id},{count:1,_id:0}).lean().exec();
+    // count=count[0];
+    // count=count[count]
+    if(count[0].count==0){
+        let b={count:1}
+            const user = await Book.findByIdAndUpdate(req.params.id, b, {
+            new: true,
+            })
+        res.send("book return to database")
+    }
+    else{
+        res.send("book already available in database")
+    }
+})
 
 
 app.listen(2345, async (req,res)=>{
